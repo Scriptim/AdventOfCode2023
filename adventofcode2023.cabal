@@ -49,3 +49,9 @@ common trebuchet
 executable trebuchet
     import: trebuchet
     main-is: Main.hs
+test-suite trebuchet-test
+    import: trebuchet
+    main-is: Spec.hs
+benchmark trebuchet-bench
+    import: trebuchet
+    main-is: Bench.hs
