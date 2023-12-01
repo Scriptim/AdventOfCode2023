@@ -1,15 +1,15 @@
 cabal-version: 3.8
-name: adventofcode2022
+name: adventofcode2023
 version: 0.1.0.0
-synopsis: My solutions for the Advent Of Code 2022 challenge written in Haskell
-description: https://github.com/Scriptim/AdventOfCode2022
-homepage: https://github.com/Scriptim/AdventOfCode2022
-bug-reports: https://github.com/Scriptim/AdventOfCode2022/issues
+synopsis: My solutions for the Advent Of Code 2023 challenge written in Haskell
+description: https://github.com/Scriptim/AdventOfCode2023
+homepage: https://github.com/Scriptim/AdventOfCode2023
+bug-reports: https://github.com/Scriptim/AdventOfCode2023/issues
 license: MIT
 license-file: LICENSE
 author: Scriptim
 maintainer: me@scriptim.dev
-copyright: 2022 Scriptim
+copyright: 2023 Scriptim
 extra-source-files:
     README.md
 
@@ -34,7 +34,7 @@ common aoc
     ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-import-lists -Wpartial-fields -Wredundant-constraints -Wunused-type-patterns -O2 -fwrite-ide-info -hiedir=.hie -threaded -rtsopts -with-rtsopts=-N
     build-depends:
         , base
-        , adventofcode2022:adventofcode-internal
+        , adventofcode2023:adventofcode-internal
         , text
         , extra
         , split
