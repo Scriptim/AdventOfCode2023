@@ -41,3 +41,11 @@ common aoc
         , megaparsec
         , containers
         , vector
+
+common trebuchet
+    import: aoc
+    hs-source-dirs: 01_trebuchet
+    other-modules: Trebuchet
+executable trebuchet
+    import: trebuchet
+    main-is: Main.hs
