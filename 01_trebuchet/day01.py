@@ -24,9 +24,11 @@ if __name__ == '__main__':
         # part 1
         digits_lines = (extract_digits(line) for line in lines)
         result = sum(line_value(digits) for digits in digits_lines)
+        assert result == 54990
         print(result)
 
         # part 2
         digits_lines = (digit_names_to_digits(extract_digits_with_names(line)) for line in lines)
         result = sum(line_value(digits) for digits in digits_lines)
+        assert result == 54473
         print(result)
