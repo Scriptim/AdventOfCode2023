@@ -32,6 +32,7 @@ if __name__ == '__main__':
         for game_id, cube_sets in games.items():
             if all(all(cubes[color] <= max_cubes[color] for color in cubes) for cubes in cube_sets):
                 result += game_id
+        assert result == 3059
         print(result)
 
         # part 2
@@ -45,4 +46,5 @@ if __name__ == '__main__':
             for num in required_cubes.values():
                 power *= num
             result += power
+        assert result == 65371
         print(result)
