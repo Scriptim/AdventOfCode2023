@@ -33,3 +33,16 @@ if __name__ == '__main__':
             if all(all(cubes[color] <= max_cubes[color] for color in cubes) for cubes in cube_sets):
                 result += game_id
         print(result)
+
+        # part 2
+        result = 0
+        for game_id, cube_sets in games.items():
+            required_cubes = {color: 0 for color in ['red', 'green', 'blue']}
+            for cube_set in cube_sets:
+                for color, num in cube_set.items():
+                    required_cubes[color] = max(required_cubes[color], num)
+            power = 1
+            for num in required_cubes.values():
+                power *= num
+            result += power
+        print(result)
