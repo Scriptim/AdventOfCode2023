@@ -41,6 +41,7 @@ common aoc
         , megaparsec
         , containers
         , vector
+        , deepseq
 
 common trebuchet
     import: aoc
@@ -63,3 +64,9 @@ common cube-conundrum
 executable cube-conundrum
     import: cube-conundrum
     main-is: Main.hs
+test-suite cube-conundrum-test
+    import: cube-conundrum
+    main-is: Spec.hs
+benchmark cube-conundrum-bench
+    import: cube-conundrum
+    main-is: Bench.hs

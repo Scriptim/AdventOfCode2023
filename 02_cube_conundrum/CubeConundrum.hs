@@ -1,12 +1,17 @@
+{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE DeriveGeneric #-}
+
 module CubeConundrum (parseInput, part1, part2) where
 
 import AdventOfCode (Parser)
+import Control.DeepSeq (NFData)
 import Data.Text (pack)
+import GHC.Generics (Generic)
 import Text.Megaparsec (endBy1, sepBy1, (<|>))
 import Text.Megaparsec.Char (char, newline, space, string)
 import Text.Megaparsec.Char.Lexer (decimal)
 
-data CubeColor = Red | Green | Blue deriving (Eq, Enum)
+data CubeColor = Red | Green | Blue deriving (Eq, Enum, Generic, NFData)
 
 type Cubes = (CubeColor, Int)
 
