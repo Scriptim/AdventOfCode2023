@@ -55,3 +55,11 @@ test-suite trebuchet-test
 benchmark trebuchet-bench
     import: trebuchet
     main-is: Bench.hs
+
+common cube-conundrum
+    import: aoc
+    hs-source-dirs: 02_cube_conundrum
+    other-modules: CubeConundrum
+executable cube-conundrum
+    import: cube-conundrum
+    main-is: Main.hs
