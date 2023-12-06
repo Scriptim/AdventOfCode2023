@@ -38,6 +38,7 @@ if __name__ == '__main__':
         for number in numbers:
             if any(adjacent(number, symbol) for symbol in symbols):
                 result += number[0]
+        assert result == 532331
         print(result)
 
         # part 2
@@ -46,4 +47,5 @@ if __name__ == '__main__':
             adjacent_numbers = [number[0] for number in numbers if adjacent(number, gear)]
             if len(adjacent_numbers) == 2:
                 result += adjacent_numbers[0] * adjacent_numbers[1]
+        assert result == 82301120
         print(result)
