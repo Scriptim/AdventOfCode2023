@@ -39,3 +39,11 @@ if __name__ == '__main__':
             if any(adjacent(number, symbol) for symbol in symbols):
                 result += number[0]
         print(result)
+
+        # part 2
+        result = 0
+        for gear in filter(lambda symbol: symbol[0] == '*', symbols):
+            adjacent_numbers = [number[0] for number in numbers if adjacent(number, gear)]
+            if len(adjacent_numbers) == 2:
+                result += adjacent_numbers[0] * adjacent_numbers[1]
+        print(result)
