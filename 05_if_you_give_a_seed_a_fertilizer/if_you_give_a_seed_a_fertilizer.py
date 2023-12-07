@@ -22,3 +22,39 @@ if __name__ == '__main__':
                         break
             result = min(result, seed)
         print(result)
+
+        # part 2
+        seeds = [(seeds[i], seeds[i + 1]) for i in range(0, len(seeds), 2)]
+        for mapping in maps:
+
+            # divide seeds into intervals that are transformed uniformly
+            breakpoints = set()
+            for _, src_range_start, range_len in mapping:
+                breakpoints.add(src_range_start)
+                breakpoints.add(src_range_start + range_len)
+            breakpoints = sorted(breakpoints)
+            i = 0
+            while i < len(seeds):
+                seed_start, seed_len = seeds[i]
+                for bp in breakpoints:
+                    if bp in range(seed_start + 1, seed_start + seed_len):
+                        seeds[i] = (seed_start, bp - seed_start)
+                        seeds.append((bp, seed_start + seed_len - bp))
+                        break
+                i += 1
+
+            # apply map
+            new_seeds = []
+            for seed_start, seed_len in seeds:
+                transformed = False
+                for dst_range_start, src_range_start, range_len in mapping:
+                    if seed_start in range(src_range_start, src_range_start + range_len):
+                        new_seeds.append((dst_range_start + seed_start - src_range_start, seed_len))
+                        transformed = True
+                        break
+                if not transformed:
+                    new_seeds.append((seed_start, seed_len))
+            seeds = new_seeds
+
+        result = min(seeds, key=lambda x: x[0])[0]
+        print(result)
