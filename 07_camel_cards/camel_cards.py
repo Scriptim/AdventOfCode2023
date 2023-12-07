@@ -39,8 +39,10 @@ if __name__ == '__main__':
 
         # part 1
         result = total_winnings(hands)
+        assert result == 246795406
         print(result)
 
         # part 2
         result = total_winnings(([0 if card == 11 else card for card in hand], bid) for hand, bid in hands)
+        assert result == 249356515
         print(result)
