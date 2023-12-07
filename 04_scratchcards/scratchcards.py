@@ -22,3 +22,16 @@ if __name__ == '__main__':
             if matches:
                 result += 2 ** (matches - 1)
         print(result)
+
+        # part 2
+        i = 0
+        while i < len(cards):
+            (card_number, winning_numbers, my_numbers) = cards[i]
+            matches = len(winning_numbers.intersection(my_numbers))
+            if matches:
+                result += 2 ** (matches - 1)
+                copies = cards[card_number : min(card_number + matches, num_cards)]
+                cards.extend(copies)
+            i += 1
+        result = len(cards)
+        print(result)
