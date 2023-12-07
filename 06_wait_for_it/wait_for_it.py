@@ -17,10 +17,12 @@ if __name__ == '__main__':
         result = 1
         for time, distance in races:
             result *= num_beating_ways(time, distance)
+        assert result == 5133600
         print(result)
 
         # part 2
         time = int(''.join(str(time) for time in times))
         distance = int(''.join(str(dist) for dist in distances))
         result = num_beating_ways(time, distance)
+        assert result == 40651271
         print(result)
