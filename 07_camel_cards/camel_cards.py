@@ -1,25 +1,22 @@
 #!/usr/bin/env python3
 
 def hand_type(hand: list[int]) -> int:
-    hand_no_joker = [card for card in hand if card != 0]
-    num_jokers = len(hand) - len(hand_no_joker)
-    num_threes = len(set(card for card in hand_no_joker if hand_no_joker.count(card) == 3))
-    num_pairs = len(set(card for card in hand_no_joker if hand_no_joker.count(card) == 2))
+    frequent_card = max((card for card in hand if card != 0), default=0, key=hand.count)
+    hand = [frequent_card if card == 0 else card for card in hand]
 
-    if num_jokers == 5 or hand_no_joker.count(hand_no_joker[0]) == len(hand_no_joker):
+    if hand.count(hand[0]) == 5:
         return 6  # five of a kind
-    elif any(hand_no_joker.count(card) == len(hand_no_joker) - 1 for card in hand_no_joker):
+    if any(hand.count(card) == 4 for card in hand):
         return 5  # four of a kind
-    elif (num_jokers, num_threes, num_pairs) in [(2, 0, 1), (1, 1, 0), (1, 0, 2), (0, 1, 1)]:
+    if any(hand.count(card) == 3 for card in hand) and any(hand.count(card) == 2 for card in hand):
         return 4  # full house
-    elif any(hand_no_joker.count(card) + num_jokers == 3 for card in hand_no_joker):
+    if any(hand.count(card) == 3 for card in hand):
         return 3  # three of a kind
-    elif num_pairs + num_jokers == 2:
+    if len(set(card for card in hand if hand.count(card) == 2)) == 2:
         return 2  # two pair
-    elif num_pairs + num_jokers == 1:
+    if any(hand.count(card) == 2 for card in hand):
         return 1  # one pair
-    else:
-        return 0
+    return 0  # high card
 
 def total_winnings(hands: list[tuple[list[int], int]]) -> int:
     result = 0
