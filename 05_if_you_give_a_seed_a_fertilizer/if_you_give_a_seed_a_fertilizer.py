@@ -21,6 +21,7 @@ if __name__ == '__main__':
                         seed = dst_range_start + seed - src_range_start
                         break
             result = min(result, seed)
+        assert result == 111627841
         print(result)
 
         # part 2
@@ -57,4 +58,5 @@ if __name__ == '__main__':
             seeds = new_seeds
 
         result = min(seeds, key=lambda x: x[0])[0]
+        assert result == 69323688
         print(result)
