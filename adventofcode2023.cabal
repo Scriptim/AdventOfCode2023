@@ -70,3 +70,11 @@ test-suite cube-conundrum-test
 benchmark cube-conundrum-bench
     import: cube-conundrum
     main-is: Bench.hs
+
+common gear-ratios
+    import: aoc
+    hs-source-dirs: 03_gear_ratios
+    other-modules: GearRatios
+executable gear-ratios
+    import: gear-ratios
+    main-is: Main.hs
