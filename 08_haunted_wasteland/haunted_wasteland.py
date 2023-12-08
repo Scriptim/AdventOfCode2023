@@ -21,6 +21,7 @@ if __name__ == '__main__':
         while current_node != 'ZZZ':
             current_node = network[current_node][direction(result)]
             result += 1
+        assert result == 16043
         print(result)
 
         # part 2
@@ -33,4 +34,5 @@ if __name__ == '__main__':
                 steps += 1
             z_distance[starting_node] = steps
         result = lcm(*z_distance.values())
+        assert result == 15726453850399
         print(result)
