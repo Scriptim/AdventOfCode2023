@@ -78,3 +78,9 @@ common gear-ratios
 executable gear-ratios
     import: gear-ratios
     main-is: Main.hs
+test-suite gear-ratios-test
+    import: gear-ratios
+    main-is: Spec.hs
+benchmark gear-ratios-bench
+    import: gear-ratios
+    main-is: Bench.hs
