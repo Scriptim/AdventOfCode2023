@@ -14,3 +14,7 @@ if __name__ == '__main__':
         # part 1
         result = sum(find_next(sequence) for sequence in sequences)
         print(result)
+
+        # part 2
+        result = sum(find_next(list(reversed(sequence))) for sequence in sequences)
+        print(result)
