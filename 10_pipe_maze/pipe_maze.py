@@ -126,8 +126,10 @@ if __name__ == '__main__':
 
         # part 1
         result = loop_length(maze, start) // 2
+        assert result == 7145
         print(result)
 
         # part 2
         result = sum(1 for row in mark_faces(maze, start) for tile in row if tile == 'I')
+        assert result == 445
         print(result)
