@@ -13,6 +13,16 @@ tile_directions = {
     'J': [(-1, 0), (0, -1)],
     '7': [(-1, 0), (0, 1)],
     'F': [(0, 1), (1, 0)],
+    '.': [],
+}
+
+tile_rights = {
+    '|': ([(1, 0)], [(-1, 0)]),
+    '-': ([(0, -1)], [(0, 1)]),
+    'L': ([], [(-1, 0), (-1, 1), (0, 1)]),
+    'J': ([], [(0, 1), (1, 1), (1, 0)]),
+    '7': ([(1, 0), (1, -1), (0, -1)], []),
+    'F': ([(0, -1), (-1, -1), (-1, 0)], []),
 }
 
 def start_tile_type(maze: list[list[str]], start: (int, int)) -> str:
@@ -34,6 +44,78 @@ def start_tile_type(maze: list[list[str]], start: (int, int)) -> str:
         if directions == connect_directions:
             return tile
 
+def loop_length(maze: list[list[str]], start: (int, int)) -> int:
+    length = 0
+
+    x, y = start
+    dir_x, dir_y = tile_directions[maze[x][y]][0]
+    while True:
+        x, y = x + dir_x, y + dir_y
+        dir1, dir2 = tile_directions[maze[x][y]]
+        dir_x, dir_y = dir1 if (-dir_x, -dir_y) == dir2 else dir2
+
+        length += 1
+
+        if (x, y) == start:
+            return length
+
+def check_bounds(grid: list[list[str]], x: int, y: int) -> bool:
+    return 0 <= x < len(grid) and 0 <= y < len(grid[x])
+
+def flood_faces(faces: list[list[str]]) -> list[list[str]]:
+    stable = False
+    while not stable:
+        stable = True
+
+        for x, row in enumerate(faces):
+            for y, face in enumerate(row):
+                if face == 'X' or face is None:
+                    continue
+
+                for dx, dy in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
+                    if check_bounds(faces, x + dx, y + dy) and faces[x + dx][y + dy] is None:
+                        faces[x + dx][y + dy] = face
+                        stable = False
+
+    return faces
+
+def mark_faces(maze: list[list[str]], start: (int, int)) -> list[list[str]]:
+    loop_faces = [[None for _ in row] for row in maze]
+    right_turns = 0
+
+    x, y = start
+    dir_x, dir_y = tile_directions[maze[x][y]][0]
+    while True:
+        loop_faces[x][y] = 'X'  # part of loop
+
+        # mark faces
+        dir_index = tile_directions[maze[x][y]].index((dir_x, dir_y))
+        right_tiles = tile_rights[maze[x][y]][dir_index]
+        left_tiles = tile_rights[maze[x][y]][1 - dir_index]
+        for dx, dy in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
+            if check_bounds(loop_faces, x + dx, y + dy) and loop_faces[x + dx][y + dy] is None:
+                loop_faces[x + dx][y + dy] = 'O' if (dx, dy) in right_tiles else 'I'
+
+        # keep track of loop orientation
+        if not right_tiles:
+            right_turns += 1
+        elif not left_tiles:
+            right_turns -= 1
+
+        x, y = x + dir_x, y + dir_y
+        dir1, dir2 = tile_directions[maze[x][y]]
+        dir_x, dir_y = dir1 if (-dir_x, -dir_y) == dir2 else dir2
+
+        if (x, y) == start:
+            if right_turns > 0:
+                for i, row in enumerate(loop_faces):
+                    for j, tile in enumerate(row):
+                        if tile == 'O':
+                            loop_faces[i][j] = 'I'
+                        elif tile == 'I':
+                            loop_faces[i][j] = 'O'
+            return flood_faces(loop_faces)
+
 if __name__ == '__main__':
     with open('input.txt', 'r') as f:
         # parse input
@@ -43,16 +125,9 @@ if __name__ == '__main__':
         maze[start[0]][start[1]] = start_tile
 
         # part 1
-        x, y = start
-        dir_x, dir_y = tile_directions[start_tile][0]
-        loop_length = 0
-        while True:
-            x, y = x + dir_x, y + dir_y
-            dir1, dir2 = tile_directions[maze[x][y]]
-            dir_x, dir_y = dir1 if (-dir_x, -dir_y) == dir2 else dir2
-            loop_length += 1
+        result = loop_length(maze, start) // 2
+        print(result)
 
-            if (x, y) == start:
-                break
-        result = loop_length // 2
+        # part 2
+        result = sum(1 for row in mark_faces(maze, start) for tile in row if tile == 'I')
         print(result)
