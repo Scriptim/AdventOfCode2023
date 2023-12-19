@@ -30,6 +30,7 @@ if __name__ == '__main__':
         for i, (x1, y1) in enumerate(galaxies):
             for x2, y2 in galaxies[i+1:]:
                 result += distance((x1, y1), (x2, y2), expand_rows, expand_columns, 2)
+        assert result == 9591768
         print(result)
 
         # part 2
@@ -37,4 +38,5 @@ if __name__ == '__main__':
         for i, (x1, y1) in enumerate(galaxies):
             for x2, y2 in galaxies[i+1:]:
                 result += distance((x1, y1), (x2, y2), expand_rows, expand_columns, 1000000)
+        assert result == 746962097860
         print(result)
