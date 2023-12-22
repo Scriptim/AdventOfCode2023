@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-def is_reflection(row: str, column: int) -> bool:
+def reflection_delta(row: str, column: int) -> int:
     reflection_length = min(len(row[:column]), len(row[column:]))
-    return row[:column][::-1][:reflection_length] == row[column:][:reflection_length]
+    return sum(row[:column][::-1][:reflection_length][i] != row[column:][:reflection_length][i] for i in range(reflection_length))
 
-def reflection_columns(pattern: list[str]) -> int:
+def reflection_columns(pattern: list[str], delta=0) -> int:
     for col in range(1, len(pattern[0])):
-        if all(is_reflection(pattern[row], col) for row in range(len(pattern))):
+        if sum(reflection_delta(pattern[row], col) for row in range(len(pattern))) == delta:
             return col
     return 0
 
@@ -21,8 +21,16 @@ if __name__ == '__main__':
             else:
                 patterns.append([])
 
+        def transpose(pattern): return list(map(''.join, zip(*pattern)))
+
         # part 1
         result = 0
         for pattern in patterns:
-            result += reflection_columns(pattern) or 100 * reflection_columns(list(map(''.join, zip(*pattern))))
+            result += reflection_columns(pattern) or 100 * reflection_columns(transpose(pattern))
+        print(result)
+
+        # part 2
+        result = 0
+        for pattern in patterns:
+            result += reflection_columns(pattern, 1) or 100 * reflection_columns(transpose(pattern), 1)
         print(result)
