@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
-def num_arrangements(record: str, groups: [int]) -> int:
+from functools import cache
+
+@cache
+def num_arrangements(record: str, groups: tuple[int, ...]) -> int:
     record = record.lstrip('.')
 
     if not groups:
@@ -20,10 +23,18 @@ if __name__ == '__main__':
         records = []
         for line in f.readlines():
             [record, groups] = line.strip().split()
-            records.append((record, list(map(int, groups.split(',')))))
+            records.append((record, tuple(map(int, groups.split(',')))))
 
         # part 1
         result = 0
         for record, groups in records:
+            result += num_arrangements(record, groups)
+        print(result)
+
+        # part 2
+        result = 0
+        for record, groups in records:
+            record = '?'.join([''.join(record)] * 5)
+            groups = groups * 5
             result += num_arrangements(record, groups)
         print(result)
