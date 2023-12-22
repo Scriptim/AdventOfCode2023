@@ -34,6 +34,7 @@ if __name__ == '__main__':
 
         # part 1
         result = total_load(tilt_north(platform))
+        assert result == 109665
         print(result)
 
         # part 2
@@ -48,4 +49,5 @@ if __name__ == '__main__':
         for _ in range((1000000000 - cycle_start) % (cycle - cycle_start)):
             platform = tilt_all(platform)
         result = total_load(platform)
+        assert result == 96061
         print(result)
